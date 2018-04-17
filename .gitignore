@@ -49,7 +49,9 @@ $RECYCLE.BIN/
 
 ### Eclipse
 .metadata
+bin/*
 bin/
+/bin/
 tmp/
 *.tmp
 *.bak
