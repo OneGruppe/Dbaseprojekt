@@ -6,9 +6,11 @@ import connector01917.Connector;
 import daoimpl01917.MySQLProduktBatchDAO;
 import daoimpl01917.MySQLProduktBatchKompDAO;
 import daoimpl01917.MySQLRaavareBatchDAO;
+import daoimpl01917.MySQLRaavareDAO;
 import dto01917.ProduktBatchDTO;
 import dto01917.ProduktBatchKompDTO;
 import dto01917.RaavareBatchDTO;
+import dto01917.RaavareDTO;
 
 public class Test_main {
 	public static void main(String[] args) {
@@ -196,6 +198,49 @@ public class Test_main {
 
 			System.out.println("Råvarebatchet er blevet opdateret");
 			System.out.println(raaBatch.getRaavareBatch(9));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		/*****************************************************************
+		 ** Raavare tests**
+		 ****************************************************************/
+
+		MySQLRaavareDAO raavare = new MySQLRaavareDAO();
+
+		System.out.println("\nRåvare nummer 4: ");
+		try {
+			System.out.println(raavare.getRaavare(4));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("\nOpret ny råvare: ");
+		RaavareDTO raavare_obj = new RaavareDTO(8, "champignon", "Champignon A/S");
+		try {
+			raavare.createRaavare(raavare_obj);
+			System.out.println("Råvaren er oprettet");
+			System.out.println(raavare.getRaavare(8));
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("\nOpdater råvareinformation: ");
+		try {
+			raavare_obj.setLeverandoer("Champignon & Svampe A/S");
+			raavare.updateRaavare(raavare_obj);
+
+			System.out.println("Raavaren er blevet opdateret");
+			System.out.println(raavare.getRaavare(8));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("\nPrint alle produktbatches: ");
+		try {
+			System.out.println(raavare.getRaavareList());
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
