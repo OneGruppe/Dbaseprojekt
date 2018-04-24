@@ -1,14 +1,12 @@
 package test01917;
 
-import daoimpl01917.MySQLOperatoerDAO;
-import daoimpl01917.MySQLProduktBatchDAO;
-import daointerfaces01917.DALException;
-import dto01917.OperatoerDTO;
-import dto01917.ProduktBatchDTO;
-
 import java.sql.SQLException;
 
 import connector01917.Connector;
+import daoimpl01917.MySQLProduktBatchDAO;
+import daoimpl01917.MySQLProduktBatchKompDAO;
+import dto01917.ProduktBatchDTO;
+import dto01917.ProduktBatchKompDTO;
 
 public class Test_main {
 	public static void main(String[] args) {
@@ -50,6 +48,10 @@ public class Test_main {
 		catch (DALException e) { System.out.println(e.getMessage()); }		
 		*/
 		
+		/*****************************************************************
+							**Produktbatch tests**
+		****************************************************************/
+		
 		MySQLProduktBatchDAO prod = new MySQLProduktBatchDAO();
 		
 		System.out.println("Produktbatch nummer 1: ");
@@ -80,6 +82,66 @@ public class Test_main {
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
+		System.out.println("\nPrint alle produktbatches: ");
+		try {
+			System.out.println(prod.getProduktBatchList());
+			
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		/*****************************************************************
+		 				**Produktbatchkomponent tests**
+		 ****************************************************************/
+		
+		MySQLProduktBatchKompDAO prodKomp = new MySQLProduktBatchKompDAO();
+		
+		System.out.println("\nProduktbatchkomponent nummer 1: ");
+		try {
+			System.out.println(prodKomp.getProduktBatchKomp(1, 1));
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("\nPrint alle produktbatchekomponenter: ");
+		try {
+			System.out.println(prodKomp.getProduktBatchKompList());
+			
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("\nPrint alle produktbatchekomponenter med pb_id 1: ");
+		try {
+			System.out.println(prodKomp.getProduktBatchKompList(1));
+			
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("\nOpret nyt produktbatchkomponent: ");
+		ProduktBatchKompDTO produktBatchKomp = new ProduktBatchKompDTO(4, 3, 0.8, 11.05, 2);
+		try {
+			prodKomp.createProduktBatchKomp(produktBatchKomp);
+			System.out.println("Produktbatchkomponenten er oprettet");
+			System.out.println(prodKomp.getProduktBatchKomp(4, 3));
+			
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("\nOpdater produktbatchkomponentinformation: ");
+		try {
+			produktBatchKomp.setNetto(12.08);
+			prodKomp.updateProduktBatchKomp(produktBatchKomp);
+			
+			System.out.println("Produktbatchkomponenten er blevet opdateret");
+			System.out.println(prodKomp.getProduktBatchKomp(4, 3));
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 		
 	}
 }
