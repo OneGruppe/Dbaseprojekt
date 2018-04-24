@@ -18,7 +18,9 @@ public class MySQLRaavareDAO implements RaavareDAO {
 
 		try {
 			if (!rs.first())
+			{
 				throw new DALException("Råvaren " + raavareId + " findes ikke");
+			}
 			return new RaavareDTO(rs.getInt("raavare_id"), rs.getString("raavare_navn"), rs.getString("leverandoer"));
 		} catch (SQLException e) {
 			throw new DALException(e);

@@ -7,10 +7,12 @@ import daoimpl01917.MySQLProduktBatchDAO;
 import daoimpl01917.MySQLProduktBatchKompDAO;
 import daoimpl01917.MySQLRaavareBatchDAO;
 import daoimpl01917.MySQLRaavareDAO;
+import daoimpl01917.MySQLReceptDAO;
 import dto01917.ProduktBatchDTO;
 import dto01917.ProduktBatchKompDTO;
 import dto01917.RaavareBatchDTO;
 import dto01917.RaavareDTO;
+import dto01917.ReceptDTO;
 
 public class Test_main {
 	public static void main(String[] args) {
@@ -237,9 +239,52 @@ public class Test_main {
 			System.out.println(e.getMessage());
 		}
 
-		System.out.println("\nPrint alle produktbatches: ");
+		System.out.println("\nPrint alle råvarer: ");
 		try {
 			System.out.println(raavare.getRaavareList());
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		/*****************************************************************
+		 ** recept tests**
+		 ****************************************************************/
+
+		MySQLReceptDAO recept = new MySQLReceptDAO();
+
+		System.out.println("\nRecept nummer 3: ");
+		try {
+			System.out.println(recept.getRecept(3));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("\nOpret ny recept: ");
+		ReceptDTO recept_obj = new ReceptDTO(4, "newroz");
+		try {
+			recept.createRecept(recept_obj);
+			System.out.println("Recepten er oprettet");
+			System.out.println(recept.getRecept(4));
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("\nOpdater receptinformation: ");
+		try {
+			recept_obj.setReceptNavn("matador");
+			recept.updateRecept(recept_obj);
+
+			System.out.println("Recepten er blevet opdateret");
+			System.out.println(recept.getRecept(4));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("\nPrint alle recepter: ");
+		try {
+			System.out.println(recept.getReceptList());
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

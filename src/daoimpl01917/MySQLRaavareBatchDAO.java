@@ -18,7 +18,9 @@ public class MySQLRaavareBatchDAO implements RaavareBatchDAO {
 
 		try {
 			if (!rs.first())
+			{
 				throw new DALException("Råvarebatchet " + rbId + " findes ikke");
+			}
 			return new RaavareBatchDTO(rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getDouble("maengde"));
 		} catch (SQLException e) {
 			throw new DALException(e);

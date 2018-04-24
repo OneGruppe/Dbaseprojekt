@@ -15,7 +15,10 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 	public OperatoerDTO getOperatoer(int oprId) throws DALException {
 		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer WHERE opr_id = " + oprId);
 	    try {
-	    	if (!rs.first()) throw new DALException("Operatoeren " + oprId + " findes ikke");
+	    	if (!rs.first()) 
+	    	{
+	    		throw new DALException("Operatoeren " + oprId + " findes ikke");
+	    	}
 	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
