@@ -8,11 +8,13 @@ import daoimpl01917.MySQLProduktBatchKompDAO;
 import daoimpl01917.MySQLRaavareBatchDAO;
 import daoimpl01917.MySQLRaavareDAO;
 import daoimpl01917.MySQLReceptDAO;
+import daoimpl01917.MySQLReceptKompDAO;
 import dto01917.ProduktBatchDTO;
 import dto01917.ProduktBatchKompDTO;
 import dto01917.RaavareBatchDTO;
 import dto01917.RaavareDTO;
 import dto01917.ReceptDTO;
+import dto01917.ReceptKompDTO;
 
 public class Test_main {
 	public static void main(String[] args) {
@@ -60,12 +62,15 @@ public class Test_main {
 		 */
 
 		/*****************************************************************
-		 ** Produktbatch tests**
+		 **Produktbatch tests**
 		 ****************************************************************/
+		System.out.println("\n\n/*****************************************************************");
+		System.out.println("**Produktbatch tests**");
+		System.out.println("****************************************************************/");
 
 		MySQLProduktBatchDAO prod = new MySQLProduktBatchDAO();
 
-		System.out.println("Produktbatch nummer 1: ");
+		System.out.println("\nProduktbatch nummer 1: ");
 		try {
 			System.out.println(prod.getProduktBatch(1));
 		} catch (Exception e) {
@@ -103,12 +108,15 @@ public class Test_main {
 		}
 
 		/*****************************************************************
-		 ** Produktbatchkomponent tests**
+		 **Produktbatchkomponent tests**
 		 ****************************************************************/
+		System.out.println("\n\n/*****************************************************************");
+		System.out.println("**Produktbatchkomponent tests**");
+		System.out.println("****************************************************************/");
 
 		MySQLProduktBatchKompDAO prodKomp = new MySQLProduktBatchKompDAO();
 
-		System.out.println("\nProduktbatchkomponent nummer 1: ");
+		System.out.println("\nProduktbatchkomponent nummer 1-1: ");
 		try {
 			System.out.println(prodKomp.getProduktBatchKomp(1, 1));
 		} catch (Exception e) {
@@ -154,8 +162,11 @@ public class Test_main {
 		}
 
 		/*****************************************************************
-		 ** Raavarebatch tests**
+		 **Raavarebatch tests**
 		 ****************************************************************/
+		System.out.println("\n\n/*****************************************************************");
+		System.out.println("**Raavarebatch tests**");
+		System.out.println("****************************************************************/");
 
 		MySQLRaavareBatchDAO raaBatch = new MySQLRaavareBatchDAO();
 
@@ -205,8 +216,11 @@ public class Test_main {
 		}
 		
 		/*****************************************************************
-		 ** Raavare tests**
+		 **Raavare tests**
 		 ****************************************************************/
+		System.out.println("\n\n/*****************************************************************");
+		System.out.println("**Raavare tests**");
+		System.out.println("****************************************************************/");
 
 		MySQLRaavareDAO raavare = new MySQLRaavareDAO();
 
@@ -248,8 +262,11 @@ public class Test_main {
 		}
 		
 		/*****************************************************************
-		 ** recept tests**
+		 **Recept tests**
 		 ****************************************************************/
+		System.out.println("\n\n/*****************************************************************");
+		System.out.println("**Recept tests**");
+		System.out.println("****************************************************************/");
 
 		MySQLReceptDAO recept = new MySQLReceptDAO();
 
@@ -286,6 +303,60 @@ public class Test_main {
 		try {
 			System.out.println(recept.getReceptList());
 
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		/*****************************************************************
+		 **Receptkomponent tests**
+		 ****************************************************************/
+		System.out.println("\n\n/*****************************************************************");
+		System.out.println("**Receptkomponent tests**");
+		System.out.println("****************************************************************/");
+
+		MySQLReceptKompDAO receptKomp = new MySQLReceptKompDAO();
+
+		System.out.println("\nRecepotkomponent nummer 3-4: ");
+		try {
+			System.out.println(receptKomp.getReceptKomp(3,4));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("\nPrint alle receptkomponenter: ");
+		try {
+			System.out.println(receptKomp.getReceptKompList());
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("\nPrint alle receptkomponenter med recept_id 3: ");
+		try {
+			System.out.println(receptKomp.getReceptKompList(3));
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("\nOpret ny receptkomponent: ");
+		ReceptKompDTO receptKomponent = new ReceptKompDTO(4, 7, 15, 0.1);
+		try {
+			receptKomp.createReceptKomp(receptKomponent);
+			System.out.println("Receptkomponenten er oprettet");
+			System.out.println(receptKomp.getReceptKomp(4, 7));
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("\nOpdater receptkomponentinformation: ");
+		try {
+			receptKomponent.setNomNetto(17);
+			receptKomp.updateReceptKomp(receptKomponent);
+
+			System.out.println("Receptkomponenten er blevet opdateret");
+			System.out.println(receptKomp.getReceptKomp(4, 7));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
