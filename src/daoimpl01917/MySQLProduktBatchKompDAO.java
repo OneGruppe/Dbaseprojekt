@@ -18,7 +18,7 @@ public class MySQLProduktBatchKompDAO implements ProduktBatchKompDAO {
 
 		try {
 			if (!rs.first())
-				throw new DALException("Produktbatchet " + pbId + " findes ikke");
+				throw new DALException("Produktbatchkomponenten " + pbId + " findes ikke");
 			return new ProduktBatchKompDTO(rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getInt("opr_id"));
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -38,7 +38,8 @@ public class MySQLProduktBatchKompDAO implements ProduktBatchKompDAO {
 			throw new DALException(e);
 		}
 		
-		return prodKompList;	}
+		return prodKompList;	
+	}
 
 	@Override
 	public List<ProduktBatchKompDTO> getProduktBatchKompList() throws DALException {
