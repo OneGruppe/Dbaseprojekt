@@ -6,8 +6,6 @@ import daointerfaces01917.DALException;
 import dto01917.OperatoerDTO;
 import dto01917.ProduktBatchDTO;
 
-import static org.junit.Assert.assertTrue;
-
 import java.sql.SQLException;
 
 import connector01917.Connector;
@@ -53,10 +51,32 @@ public class Test_main {
 		*/
 		
 		MySQLProduktBatchDAO prod = new MySQLProduktBatchDAO();
+		
 		System.out.println("Produktbatch nummer 1: ");
 		try {
-			new Connector();
 			System.out.println(prod.getProduktBatch(1));
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("\nOpret nyt produktbatch: ");
+		ProduktBatchDTO produkt = new ProduktBatchDTO(7, 0, 2);
+		try {
+			prod.createProduktBatch(produkt);
+			System.out.println("Produktbatchet er oprettet");
+			System.out.println(prod.getProduktBatch(7));
+			
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("\nOpdater produktbatchinformation: ");
+		try {
+			produkt.setStatus(2);
+			prod.updateProduktBatch(produkt);
+			
+			System.out.println("Produktbatchet er blevet opdateret");
+			System.out.println(prod.getProduktBatch(7));
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
