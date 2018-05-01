@@ -62,7 +62,7 @@ public class Interface_tests {
 
 		System.out.println("\nOpdater produktbatchinformation: ");
 		try {
-			produkt.setStatus(2);
+			produkt.setStatus(0);
 			prod.updateProduktBatch(produkt);
 
 			System.out.println("Produktbatchet er blevet opdateret");
@@ -125,7 +125,7 @@ public class Interface_tests {
 
 		System.out.println("\nOpdater produktbatchkomponentinformation: ");
 		try {
-			produktBatchKomp.setNetto(12.08);
+			produktBatchKomp.setNetto(12.03);
 			prodKomp.updateProduktBatchKomp(produktBatchKomp);
 
 			System.out.println("Produktbatchkomponenten er blevet opdateret");
@@ -180,7 +180,7 @@ public class Interface_tests {
 
 		System.out.println("\nOpdater raavarebatch: ");
 		try {
-			raavarebatch.setMaengde(400.0);
+			raavarebatch.setMaengde(500.0);
 			raaBatch.updateRaavareBatch(raavarebatch);
 
 			System.out.println("Råvarebatchet er blevet opdateret");
