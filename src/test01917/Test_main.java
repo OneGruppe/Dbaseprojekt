@@ -52,11 +52,12 @@ public class Test_main {
 		} catch (DALException e) {
 			System.out.println(e.getMessage()); 
 		}
-		System.out.println("Opdatering af initialer for operatoer");
+		System.out.println("Opdatering af aktivitet for operatoer");
+		OperatoerDTO updatedUser = new OperatoerDTO(15, "Eva",  "Jørgensen", "EJ", 0, "010195-2012", "mitpasswordersvaert", null);
 		oprDTO.setIni("DoJu");
 
 		try { 
-			opr.updateOperatoer(oprDTO); 
+			opr.updateOperatoer(updatedUser);
 		} catch
 		(DALException e) { 
 			System.out.println(e.getMessage()); 
