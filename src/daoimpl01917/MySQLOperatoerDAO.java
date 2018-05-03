@@ -12,14 +12,25 @@ import daointerfaces01917.OperatoerDAO;
 import dto01917.OperatoerDTO;
 
 public class MySQLOperatoerDAO implements OperatoerDAO {
+	
 	public OperatoerDTO getOperatoer(int oprId) throws DALException {
-		ResultSet rs = Connector.doQuery("SELECT * FROM UserViewWithRoles WHERE opr_id = " + oprId);
+		List<Integer> roleList = new ArrayList<Integer>();
+		OperatoerDTO user;
+		ResultSet rs = Connector.doQuery("SELECT * FROM UserView WHERE opr_id = " + oprId);
+		ResultSet rsRoles = Connector.doQuery("SELECT * FROM person_rolle WHERE person_info_opr_id = " + oprId);
+		
 	    try {
 	    	if (!rs.first()) 
 	    	{
 	    		throw new DALException("Operatoeren " + oprId + " findes ikke");
 	    	}
-	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("fornavn"), rs.getString("efternavn"), rs.getString("ini"), rs.getInt("aktiv"), rs.getString("cpr"), rs.getString("password"), null);
+	    	user = new OperatoerDTO (rs.getInt("opr_id"), rs.getString("fornavn"), rs.getString("efternavn"), rs.getString("ini"), rs.getInt("aktiv"), rs.getString("cpr"), rs.getString("password"), null);
+	    	
+	    	while(rs.next()) {
+	    		roleList.add(rs.getInt("rolle_rolle_id"));
+	    	}
+	    	user.setRoles(roleList);
+	    	return user;
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 		
