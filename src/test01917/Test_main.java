@@ -1,6 +1,8 @@
 package test01917;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import connector01917.Connector;
 import daoimpl01917.MySQLOperatoerDAO;
@@ -21,26 +23,30 @@ public class Test_main {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Operatoer nummer 3:"); MySQLOperatoerDAO opr = new
-		MySQLOperatoerDAO(); try { System.out.println(opr.getOperatoer(3)); } catch
+		System.out.println("Operatoer nummer 1:"); MySQLOperatoerDAO opr = new
+		MySQLOperatoerDAO(); try { System.out.println(opr.getOperatoer(15)); } catch
 		(DALException e) { System.out.println(e.getMessage()); }
 		 
-		System.out.println("Indsaettelse af ny operatoer med opr_id =  4");
+		System.out.println("Indsaettelse af ny operatoer");
+		List<Integer> roles = new ArrayList<Integer>();
+		roles.add(2);
+		roles.add(3);
+		
 		OperatoerDTO oprDTO = new
-		OperatoerDTO(4,"Don Juan","DJ","000000-0000","iloveyou"); try {
+		OperatoerDTO(0, "Don", "Burhan","DJ", 1, "353234-1111","iloveyou", roles); try {
 		opr.createOperatoer(oprDTO); } catch (DALException e) {
 		System.out.println(e.getMessage()); }
 		
-		System.out.println("Operatoer nummer 4:"); try {
-		System.out.println(opr.getOperatoer(4)); } catch (DALException e) {
+		System.out.println("Operatoer:"); try {
+		System.out.println(opr.getOperatoer(16)); } catch (DALException e) {
 		System.out.println(e.getMessage()); }
 		
-		System.out.println("Opdatering af initialer for operatoer nummer 4");
+		System.out.println("Opdatering af initialer for operatoer");
 		oprDTO.setIni("DoJu"); try { opr.updateOperatoer(oprDTO); } catch
 		(DALException e) { System.out.println(e.getMessage()); }
 		
-		System.out.println("Operatoer nummer 4:"); try {
-		System.out.println(opr.getOperatoer(4)); } catch (DALException e) {
+		System.out.println("Operatoer:"); try {
+		System.out.println(opr.getOperatoer(16)); } catch (DALException e) {
 		System.out.println(e.getMessage()); }
 		
 		System.out.println("Alle operatoerer:"); try {

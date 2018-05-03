@@ -213,7 +213,7 @@ public class Interface_tests {
 			System.out.println("Råvaren er oprettet");
 			System.out.println(raavare.getRaavare(8));
 
-		} catch (Exception e) {
+		} catch (Exception e) {	
 			System.out.println(e.getMessage());
 		}
 
