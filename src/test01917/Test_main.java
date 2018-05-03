@@ -39,9 +39,9 @@ public class Test_main {
 		roles.add(2);
 		roles.add(3);
 
-		OperatoerDTO oprDTO = new OperatoerDTO(0, "Don", "Burhan","DJ", 1, "353234-1111","iloveyou", roles); 
+		OperatoerDTO oprDTO = new OperatoerDTO(0, "Don", "Sebastian","DS", 1, "123123-1111","alleMineShibabs", roles); 
 		try {
-			opr.createOperatoer(oprDTO); 
+			opr.createOperatoer(oprDTO);
 		} catch (DALException e) {
 			System.out.println(e.getMessage()); 
 		}
@@ -53,7 +53,7 @@ public class Test_main {
 			System.out.println(e.getMessage()); 
 		}
 		System.out.println("Opdatering af aktivitet for operatoer");
-		OperatoerDTO updatedUser = new OperatoerDTO(15, "Eva",  "Jørgensen", "EJ", 0, "010195-2012", "mitpasswordersvaert", null);
+		OperatoerDTO updatedUser = new OperatoerDTO(15, "Eva-musse",  "Jørgensen", "EJ", 1, "010195-2012", "MitPasswordErSvaert", null);
 		oprDTO.setIni("DoJu");
 
 		try { 
@@ -65,7 +65,7 @@ public class Test_main {
 
 		System.out.println("Operatoer:"); 
 		try {
-			System.out.println(opr.getOperatoer(16)); 
+			System.out.println(opr.getOperatoer(15)); 
 		} catch (DALException e) {
 			System.out.println(e.getMessage()); 
 		}
@@ -79,7 +79,7 @@ public class Test_main {
 
 		System.out.println("Operatoer nummer 5:"); 
 		try {
-			System.out.println(opr.getOperatoer(5)); 
+			System.out.println(opr.getOperatoer(42)); 
 		} catch (DALException e) {
 			System.out.println(e.getMessage()); 
 		}
