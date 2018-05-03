@@ -38,14 +38,24 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 	
 	public void createOperatoer(OperatoerDTO opr) throws DALException {		
 			List<Integer> roles = opr.getRoles();
+			int userId;
 			Connector.doUpdate(
 				"CALL add_operatoer('" +opr.getFornavn()+ "', '" +opr.getEfternavn()+ "', '" +opr.getIni()+ "', "
 				+opr.getAktiv()+ ", '" +opr.getCpr()+ "', '" +opr.getPassword()+ "')"
 			);
 			
-			for(int role : roles)
-			{
-				Connector.doUpdate("CALL add_oprRolle(" +opr.getOprId()+ ", " +role+ ")");
+			try {
+				ResultSet rs = Connector.doQuery("SELECT * FROM UserView WHERE cpr='" + opr.getCpr() + "'");
+				if(!rs.first()) {
+					throw new DALException("Rollen til " + opr.getFornavn() + " " + opr.getEfternavn() + " findes ikke");
+				}
+				userId = rs.getInt("opr_id");
+				for(int role : roles)
+				{
+					Connector.doUpdate("CALL add_oprRolle(" + userId + ", " + role + ")");
+				}
+			} catch (SQLException e) {
+				throw new DALException(e);
 			}
 	}
 	
