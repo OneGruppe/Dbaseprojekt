@@ -126,7 +126,7 @@ public class Interface_tests {
 		System.out.println("\nOpdater produktbatchkomponentinformation: ");
 		try {
 			produktBatchKomp.setNetto(12.03);
-			prodKomp.updateProduktBatchKomp(produktBatchKomp);
+			//prodKomp.updateProduktBatchKomp(produktBatchKomp);
 
 			System.out.println("Produktbatchkomponenten er blevet opdateret");
 			System.out.println(prodKomp.getProduktBatchKomp(4, 3));

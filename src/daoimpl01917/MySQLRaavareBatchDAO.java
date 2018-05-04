@@ -68,5 +68,10 @@ public class MySQLRaavareBatchDAO implements RaavareBatchDAO {
 	public void updateRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
 		Connector.doUpdate("UPDATE raavarebatch SET raavare_id_rb = " + raavarebatch.getRbId() + ", maengde = " + raavarebatch.getMaengde() + ", WHERE rb_id = " + raavarebatch.getRaavareId());
 	}
+	
+	@Override
+	public void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
+		Connector.doUpdate("DELETE FROM raavarebatch, WHERE rb_id = " + raavarebatch.getRbId());
+	}
 
 }
