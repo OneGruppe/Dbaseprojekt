@@ -330,7 +330,7 @@ public class Interface_tests {
 		System.out.println("\nOpdater receptkomponentinformation: ");
 		try {
 			receptKomponent.setNomNetto(17);
-			receptKomp.updateReceptKomp(receptKomponent);
+			//receptKomp.updateReceptKomp(receptKomponent);
 
 			System.out.println("Receptkomponenten er blevet opdateret");
 			System.out.println(receptKomp.getReceptKomp(4, 7));
