@@ -49,7 +49,7 @@ public class MySQLProduktBatchDAO implements ProduktBatchDAO {
 
 	@Override
 	public void updateProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
-		Connector.doUpdate("UPDATE produktbatch SET status = " + produktbatch.getStatus() + "," + "recept_id_pb = " + produktbatch.getPbId());
+		Connector.doUpdate("UPDATE produktbatch SET status = " + produktbatch.getStatus() + "," + "recept_id_pb = " + produktbatch.getPbId() + ", WHERE pb_id = " + produktbatch.getPbId());
 	}
 
 }
