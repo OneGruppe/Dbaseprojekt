@@ -61,21 +61,11 @@ public class MySQLProduktBatchKompDAO implements ProduktBatchKompDAO {
 
 	@Override
 	public void createProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws DALException {
-		Connector.doUpdate(
-				"CALL add_pbk (" 
-				+produktbatchkomponent.getPbId()+ ", " +produktbatchkomponent.getRbId()+ ", " +produktbatchkomponent.getTara()+ ", " 
-				+produktbatchkomponent.getNetto()+ ", " +produktbatchkomponent.getOprId()+ ")"
-				);
-
+		Connector.doUpdate("INSERT INTO produktbatchkomponent (pb_id_pbk, rb_id_pbk, tara, netto, opr_id_pbk) VALUES (" + produktbatchkomponent.getPbId() + "," + produktbatchkomponent.getRbId() + "," + produktbatchkomponent.getTara() + "," + produktbatchkomponent.getNetto() + "," + produktbatchkomponent.getOprId() + "), WHERE pb_id_pbk = " + produktbatchkomponent.getPbId());
 	}
-
+	
 	@Override
-	public void updateProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws DALException {
-		Connector.doUpdate(
-				"CALL update_pbk (" +produktbatchkomponent.getPbId()+ ", " +produktbatchkomponent.getRbId()+ 
-				", " +produktbatchkomponent.getTara()+ ", " +produktbatchkomponent.getNetto()+ 
-				", " +produktbatchkomponent.getOprId()+ ")"
-				);
+	public void deleteProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws DALException {
+		Connector.doUpdate("DELETE FROM produktbatchkomponent, WHERE pb_id_pbk =" + produktbatchkomponent.getPbId());
 	}
-
 }
