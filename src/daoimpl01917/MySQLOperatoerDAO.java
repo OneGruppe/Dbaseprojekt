@@ -70,6 +70,20 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 	}
 	
 	@Override
+	public int getOperatoerId(String opr_cpr) throws DALException {
+		int opr_id = 0;
+		try {
+			ResultSet rs = Connector.doQuery("SELECT `getUserIdFromCPR`('" + opr_cpr + "') AS `getUserIdFromCPR`;");
+			while(rs.next()) {
+				opr_id = rs.getInt("getUserIdFromCPR");
+			}
+			return opr_id;
+		} catch (DALException | SQLException e) {
+			throw new DALException(e);
+		}
+	}
+
+	@Override
 	public List<OperatoerDTO> getOperatoerList() throws DALException {
 		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM UserView");
