@@ -12,58 +12,58 @@ import daointerfaces01917.OperatoerDAO;
 import dto01917.OperatoerDTO;
 
 public class MySQLOperatoerDAO implements OperatoerDAO {
-	
+
 	public OperatoerDTO getOperatoer(int oprId) throws DALException {
 		List<Integer> roleList = new ArrayList<Integer>();
 		OperatoerDTO user;
-		
-	    try {
+
+		try {
 			ResultSet rs = Connector.doQuery("SELECT * FROM UserView WHERE opr_id = " + oprId);
-	    	if (!rs.first()) 
-	    	{
-	    		throw new DALException("Operatoeren " + oprId + " findes ikke");
-	    	}
-	    	user = new OperatoerDTO (rs.getInt("opr_id"), rs.getString("fornavn"), rs.getString("efternavn"), rs.getString("ini"), rs.getInt("aktiv"), rs.getString("cpr"), rs.getString("password"), null);
-	    	
-			ResultSet rsRoles = Connector.doQuery("SELECT * FROM person_rolle WHERE person_info_opr_id = " + oprId);
-	    	while(rsRoles.next()) {
-	    		roleList.add(rsRoles.getInt("rolle_rolle_id"));
-	    	}
-	    	user.setRoles(roleList);
-	    	return user;
-	    }
-	    catch (SQLException e) {throw new DALException(e); }
-		
-	}
-	
-	public void createOperatoer(OperatoerDTO opr) throws DALException {		
-			List<Integer> roles = opr.getRoles();
-			int userId;
-			Connector.doUpdate(
-				"CALL add_operatoer('" +opr.getFornavn()+ "', '" +opr.getEfternavn()+ "', '" +opr.getIni()+ "', "
-				+opr.getAktiv()+ ", '" +opr.getCpr()+ "', '" +opr.getPassword()+ "')"
-			);
-			
-			try {
-				ResultSet rs = Connector.doQuery("SELECT * FROM UserView WHERE cpr='" + opr.getCpr() + "'");
-				if(!rs.first()) {
-					throw new DALException("Rollen til " + opr.getFornavn() + " " + opr.getEfternavn() + " findes ikke");
-				}
-				userId = rs.getInt("opr_id");
-				for(int role : roles)
-				{
-					Connector.doUpdate("CALL add_oprRolle(" + userId + ", " + role + ")");
-				}
-			} catch (SQLException e) {
-				throw new DALException(e);
+			if (!rs.first()) 
+			{
+				throw new DALException("Operatoeren " + oprId + " findes ikke");
 			}
+			user = new OperatoerDTO (rs.getInt("opr_id"), rs.getString("fornavn"), rs.getString("efternavn"), rs.getString("ini"), rs.getInt("aktiv"), rs.getString("cpr"), rs.getString("password"), null);
+
+			ResultSet rsRoles = Connector.doQuery("SELECT * FROM person_rolle WHERE person_info_opr_id = " + oprId);
+			while(rsRoles.next()) {
+				roleList.add(rsRoles.getInt("rolle_rolle_id"));
+			}
+			user.setRoles(roleList);
+			return user;
+		}
+		catch (SQLException e) {throw new DALException(e); }
+
 	}
-	
+
+	public void createOperatoer(OperatoerDTO opr) throws DALException {		
+		List<Integer> roles = opr.getRoles();
+		int userId;
+		Connector.doUpdate("CALL add_operatoer('" + opr.getFornavn() + "', '" + opr.getEfternavn() + "', '" + opr.getIni() + "', " + opr.getAktiv() + ", '" + opr.getCpr() + "', '" + opr.getPassword() + "')");
+
+		try {
+			ResultSet rs = Connector.doQuery("SELECT * FROM UserView WHERE cpr='" + opr.getCpr() + "'");
+			if(!rs.first()) {
+				throw new DALException("Rollen til " + opr.getFornavn() + " " + opr.getEfternavn() + " findes ikke");
+			}
+			userId = rs.getInt("opr_id");
+			for(int role : roles)
+			{
+				Connector.doUpdate("INSERT INTO person_rolle (person_info_opr_id, rolle_rolle_id) VALUES (" + userId + ", " + role + ")");
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+	}
+
 	public void updateOperatoer(OperatoerDTO opr) throws DALException {
-		Connector.doUpdate(
-				"CALL update_operatoer (" +opr.getOprId()+ ", '"  +opr.getFornavn()+ "', '" +opr.getEfternavn()+ "', '" +opr.getIni()+ 
-				"', '" + opr.getCpr() + "', '" +opr.getPassword()+ "', " +opr.getAktiv()+ ")"
-		);
+		List<Integer> roles = opr.getRoles();
+		Connector.doUpdate("CALL update_operatoer (" + opr.getOprId() + ", '"  + opr.getFornavn() + "', '" + opr.getEfternavn() + "', '" + opr.getIni() + 	"', '" + opr.getCpr() + "', '" + opr.getPassword() + "', " + opr.getAktiv() + ")");		
+		Connector.doUpdate("DELETE FROM operatoer_cpr WHERE opr_id_cpr=" + opr.getOprId());
+		for(int role : roles)
+		{
+			Connector.doUpdate("INSERT INTO person_rolle (person_info_opr_id, rolle_rolle_id) VALUES (" + opr.getCpr() + ", " + role + ")");
+		}
 	}
 	
 	public List<OperatoerDTO> getOperatoerList() throws DALException {
@@ -79,7 +79,7 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 		catch (SQLException e) { throw new DALException(e); }
 		return list;
 	}
-		
-		
+
+
 }
-	
+
