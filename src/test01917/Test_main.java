@@ -22,16 +22,8 @@ public class Test_main {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("Operatoer nummer 1:");
+		
 		MySQLOperatoerDAO opr = new	MySQLOperatoerDAO();
-
-		try {
-			System.out.println(opr.getOperatoer(15));
-		} catch
-		(DALException e) {
-			System.out.println(e.getMessage()); 
-		}
 
 		System.out.println("Indsaettelse af ny operatoer");
 		
@@ -39,21 +31,18 @@ public class Test_main {
 		roles.add(2);
 		roles.add(3);
 
-		OperatoerDTO oprDTO = new OperatoerDTO(0, "Don", "Sebastian","DS", 1, "123123-1111","alleMineShibabs", roles); 
+		OperatoerDTO oprDTO = new OperatoerDTO(0, "Mathias", "Muhameddaner","MM", 0, "120106","password123", roles); 
 		try {
 			opr.createOperatoer(oprDTO);
 		} catch (DALException e) {
 			System.out.println(e.getMessage()); 
 		}
 
-		System.out.println("Operatoer:"); 
-		try {
-			System.out.println(opr.getOperatoer(16)); 
-		} catch (DALException e) {
-			System.out.println(e.getMessage()); 
-		}
-		System.out.println("Opdatering af aktivitet for operatoer");
-		OperatoerDTO updatedUser = new OperatoerDTO(15, "Eva-musse",  "Jørgensen", "EJ", 1, "010195-2012", "MitPasswordErSvaert", null);
+		System.out.println("Opdatering af nuværende operatoer 'Eva'");
+		List<Integer> evaRoles = new ArrayList<Integer>();
+		roles.add(1);
+		roles.add(2);
+		OperatoerDTO updatedUser = new OperatoerDTO(15, "Eva",  "Jørgensen", "EJ", 1, "010195-2012", "MitPasswordErSvaert", evaRoles);
 		oprDTO.setIni("DoJu");
 
 		try { 
@@ -62,24 +51,31 @@ public class Test_main {
 		(DALException e) { 
 			System.out.println(e.getMessage()); 
 		}
+		
+		System.out.println("Få operatør id fra CPR '010195-2012'");
+		try {
+			System.out.println("Operatør: " + opr.getOperatoerId("010195-2012"));
+		} catch (DALException e1) {
+			System.out.println(e1.getMessage()); 
+		}
 
-		System.out.println("Operatoer:"); 
+		System.out.println("Operatoer nummer 15"); 
 		try {
 			System.out.println(opr.getOperatoer(15)); 
 		} catch (DALException e) {
 			System.out.println(e.getMessage()); 
 		}
 
-		System.out.println("Alle operatoerer:"); 
+		System.out.println("Operatoer nummer 42:"); 
 		try {
-			System.out.println(opr.getOperatoerList()); 
+			System.out.println(opr.getOperatoer(42)); 
 		} catch (DALException e) {
 			System.out.println(e.getMessage()); 
 		}
-
-		System.out.println("Operatoer nummer 5:"); 
+		
+		System.out.println("Alle operatoerer:"); 
 		try {
-			System.out.println(opr.getOperatoer(42)); 
+			System.out.println(opr.getOperatoerList()); 
 		} catch (DALException e) {
 			System.out.println(e.getMessage()); 
 		}
