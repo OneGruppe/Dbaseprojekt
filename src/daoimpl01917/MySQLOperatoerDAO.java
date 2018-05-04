@@ -13,6 +13,7 @@ import dto01917.OperatoerDTO;
 
 public class MySQLOperatoerDAO implements OperatoerDAO {
 
+	@Override
 	public OperatoerDTO getOperatoer(int oprId) throws DALException {
 		List<Integer> roleList = new ArrayList<Integer>();
 		OperatoerDTO user;
@@ -23,7 +24,7 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 			{
 				throw new DALException("Operatoeren " + oprId + " findes ikke");
 			}
-			user = new OperatoerDTO (rs.getInt("opr_id"), rs.getString("fornavn"), rs.getString("efternavn"), rs.getString("ini"), rs.getInt("aktiv"), rs.getString("cpr"), rs.getString("password"), null);
+			user = new OperatoerDTO (rs.getInt("opr_id"), rs.getString("fornavn"), rs.getString("efternavn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), null);
 
 			ResultSet rsRoles = Connector.doQuery("SELECT * FROM person_rolle WHERE person_info_opr_id = " + oprId);
 			while(rsRoles.next()) {
@@ -35,11 +36,12 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 		catch (SQLException e) {throw new DALException(e); }
 
 	}
-
+	
+	@Override
 	public void createOperatoer(OperatoerDTO opr) throws DALException {		
 		List<Integer> roles = opr.getRoles();
 		int userId;
-		Connector.doUpdate("CALL add_operatoer('" + opr.getFornavn() + "', '" + opr.getEfternavn() + "', '" + opr.getIni() + "', " + opr.getAktiv() + ", '" + opr.getCpr() + "', '" + opr.getPassword() + "')");
+		Connector.doUpdate("CALL add_operatoer('" + opr.getFornavn() + "', '" + opr.getEfternavn() + "', '" + opr.getIni() + "', '" + opr.getCpr() + "', '" + opr.getPassword() + "')");
 
 		try {
 			ResultSet rs = Connector.doQuery("SELECT * FROM UserView WHERE cpr='" + opr.getCpr() + "'");
@@ -56,9 +58,10 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 		}
 	}
 
+	@Override
 	public void updateOperatoer(OperatoerDTO opr) throws DALException {
 		List<Integer> roles = opr.getRoles();
-		Connector.doUpdate("CALL update_operatoer (" + opr.getOprId() + ", '"  + opr.getFornavn() + "', '" + opr.getEfternavn() + "', '" + opr.getIni() + 	"', '" + opr.getCpr() + "', '" + opr.getPassword() + "', " + opr.getAktiv() + ")");		
+		Connector.doUpdate("CALL update_operatoer (" + opr.getOprId() + ", '"  + opr.getFornavn() + "', '" + opr.getEfternavn() + "', '" + opr.getIni() + "', '" + opr.getCpr() + "', '" + opr.getPassword() + "')");		
 		Connector.doUpdate("DELETE FROM operatoer_cpr WHERE opr_id_cpr=" + opr.getOprId());
 		for(int role : roles)
 		{
@@ -66,6 +69,7 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 		}
 	}
 	
+	@Override
 	public List<OperatoerDTO> getOperatoerList() throws DALException {
 		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
 		ResultSet rs = Connector.doQuery("SELECT * FROM UserView");
@@ -73,13 +77,12 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 		{
 			while (rs.next()) 
 			{
-				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("fornavn"), rs.getString("efternavn"), rs.getString("ini"), rs.getInt("aktiv"), rs.getString("cpr"), rs.getString("password"), null));
+				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("fornavn"), rs.getString("efternavn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), null));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }
 		return list;
 	}
-
 
 }
 
