@@ -21,19 +21,14 @@ public class Test_main {
 		 * CREATE, UPDATE, GETUSER, GETUSERLIST
 		 * 
 		 */
-		OperatoerDAO opr = new	MySQLOperatoerDAO();
+		
+		Test_main_operatoer.getUserList();
+				
+		Test_main_operatoer.createUser();
+		
+		Test_main_operatoer.getUserList();
 
-		// Create a user (MySQLOperatoer-object, Fornavn, Efternavn, Ini, CPR, Password)
-		Test_main_operatoer.createUser(opr, "Yetti", "LastNaim", "YL", "011100-0011", "MyNewPasswordWhichIsSecure");
-
-		// Update user '15' (MySQLOperatoer-object, Fornavn, Efternavn, Ini, Password)
-		Test_main_operatoer.updateUser(opr, "Eva", "Jørgensen", "EJ", "PasswordErNemt");
-
-		// Get a user from CPR (MySQLOperatoer-object, cpr)
-		Test_main_operatoer.getUserIdFromCPR(opr, "010195-2012");
-
-		// Get a userList (MySQLOperatoer-object)
-		Test_main_operatoer.getUserList(opr);
+		Test_main_operatoer.updateUser();
 
 	}
 
