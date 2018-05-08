@@ -63,5 +63,5 @@ public class OperatoerDTO
 	public List<Integer> getRoles() { return roles; }
 	public void setRoles(List<Integer> roles) {	this.roles = roles; }
 
-	public String toString() { return oprId + "\t" + fornavn + "\t" + efternavn + "\t" + ini + "\t" + "\t" + cpr + "\t" + password; }
+	public String toString() { return "Id: " + oprId + ", Fornavn: " + fornavn + ", Efternavn: " + efternavn + ", Ini: " + ini + ", CPR: " + cpr + ", Password:" + password; }
 }

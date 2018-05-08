@@ -10,4 +10,5 @@ public interface OperatoerDAO {
 	void createOperatoer(OperatoerDTO opr) throws DALException;
 	void updateOperatoer(OperatoerDTO opr) throws DALException;
 	int getOperatoerId(String cpr) throws DALException;
+	void deleteOperatoer(int id) throws DALException;
 }

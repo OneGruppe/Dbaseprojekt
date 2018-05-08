@@ -36,7 +36,7 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 		catch (SQLException e) {throw new DALException(e); }
 
 	}
-	
+
 	@Override
 	public void createOperatoer(OperatoerDTO opr) throws DALException {		
 		List<Integer> roles = opr.getRoles();
@@ -60,15 +60,15 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 
 	@Override
 	public void updateOperatoer(OperatoerDTO opr) throws DALException {
-		List<Integer> roles = opr.getRoles();
-		Connector.doUpdate("CALL update_operatoer (" + opr.getOprId() + ", '"  + opr.getFornavn() + "', '" + opr.getEfternavn() + "', '" + opr.getIni() + "', '" + opr.getCpr() + "', '" + opr.getPassword() + "')");		
-		Connector.doUpdate("DELETE FROM operatoer_cpr WHERE opr_id_cpr=" + opr.getOprId());
-		for(int role : roles)
+		Connector.doUpdate("CALL update_operatoer (" + opr.getOprId() + ", '"  + opr.getFornavn() + "', '" + opr.getEfternavn() + "', '" + opr.getIni() + "', '" + opr.getCpr() + "', '" + opr.getPassword() + "')");
+		
+		Connector.doUpdate("DELETE FROM person_rolle WHERE person_info_opr_id = '" + opr.getOprId() + "'");
+		for(int role : opr.getRoles())
 		{
-			Connector.doUpdate("INSERT INTO person_rolle (person_info_opr_id, rolle_rolle_id) VALUES (" + opr.getCpr() + ", " + role + ")");
+			Connector.doUpdate("INSERT INTO person_rolle (person_info_opr_id, rolle_rolle_id) VALUES (" + opr.getOprId() + ", " + role + ")");
 		}
 	}
-	
+
 	@Override
 	public int getOperatoerId(String opr_cpr) throws DALException {
 		int opr_id = 0;
@@ -96,6 +96,11 @@ public class MySQLOperatoerDAO implements OperatoerDAO {
 		}
 		catch (SQLException e) { throw new DALException(e); }
 		return list;
+	}
+
+	@Override
+	public void deleteOperatoer(int id) throws DALException{
+		Connector.doUpdate("DELETE FROM person_info WHERE opr_id=" + id);
 	}
 
 }
