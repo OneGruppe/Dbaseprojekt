@@ -9,5 +9,5 @@ public interface RaavareDAO {
 	List<RaavareDTO> getRaavareList() throws DALException;
 	void createRaavare(RaavareDTO raavare) throws DALException;
 	void updateRaavare(RaavareDTO raavare) throws DALException;
-	void deleteRaavare(RaavareDTO raavare) throws DALException;
+	void deleteRaavare(int id) throws DALException;
 }
